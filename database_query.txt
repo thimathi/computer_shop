@@ -1,0 +1,283 @@
+CREATE DATABASE jd_computers_and_electronics;
+USE jd_computers_and_electronics;
+
+-- Create UserType Table
+CREATE TABLE UserType (
+    UserType_ID INT AUTO_INCREMENT PRIMARY KEY,
+    UserType_Name VARCHAR(255) NOT NULL
+);
+
+-- Create User Table
+CREATE TABLE User (
+    User_ID INT AUTO_INCREMENT PRIMARY KEY,
+    User_Name VARCHAR(255),
+    Password VARCHAR(255),
+    Name_With_Initials VARCHAR(255),
+    First_Name VARCHAR(255),
+    Last_Name VARCHAR(255),
+    Address TEXT,
+    Email VARCHAR(255),
+    Created_At DATE,
+    Phone BIGINT,
+    DOB DATE,
+    Available_Process BOOLEAN,
+    Biometric_Authentication VARCHAR(255),
+    UserType_ID INT,
+    FOREIGN KEY (UserType_ID) REFERENCES UserType(UserType_ID)
+);
+
+-- Create Customer Table
+CREATE TABLE Customer (
+    Customer_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Add_Date DATE,
+    Tp_Number BIGINT,
+    Customer_Name VARCHAR(255),
+    UserType_ID INT,
+    FOREIGN KEY (UserType_ID) REFERENCES UserType(UserType_ID)
+);
+
+-- Create Schedule Table
+CREATE TABLE Schedule (
+    Schedule_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Create_Date DATE,
+    Last_Update DATETIME,
+    Worker_ID INT
+);
+
+-- Create Regular Customers Table
+CREATE TABLE Regular_Customers (
+    Regular_Customer_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Customer_ID INT,
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID)
+);
+
+-- Create Royalty Customers Table
+CREATE TABLE Royalty_Customers (
+    Royalty_Customer_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Customer_ID INT,
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID)
+);
+
+-- Create Manager Table
+CREATE TABLE Manager (
+    Manager_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Experience VARCHAR(255),
+    NIC_Number VARCHAR(255),
+    UserType_ID INT,
+    FOREIGN KEY (UserType_ID) REFERENCES UserType(UserType_ID)
+);
+
+-- Create Admin Table
+CREATE TABLE Admin (
+    Admin_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Experience VARCHAR(255),
+    UserType_ID INT,
+    FOREIGN KEY (UserType_ID) REFERENCES UserType(UserType_ID)
+);
+
+-- Create Stock Manager Table
+CREATE TABLE Stock_Manager (
+    Stock_Manager_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Experience VARCHAR(255),
+    NIC_Number VARCHAR(255),
+    UserType_ID INT,
+    FOREIGN KEY (UserType_ID) REFERENCES UserType(UserType_ID)
+);
+
+-- Create Supplier Table
+CREATE TABLE Supplier (
+    Supplier_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Experience VARCHAR(255),
+    NIC_Number VARCHAR(255),
+    UserType_ID INT,
+    FOREIGN KEY (UserType_ID) REFERENCES UserType(UserType_ID)
+);
+
+-- Create Accountant Table
+CREATE TABLE Accountant (
+    Accountant_ID INT AUTO_INCREMENT PRIMARY KEY,
+    NIC_Number VARCHAR(255),
+    Name VARCHAR(255),
+    Status VARCHAR(255),
+    Experience VARCHAR(255),
+    UserType_ID INT,
+    FOREIGN KEY (UserType_ID) REFERENCES UserType(UserType_ID)
+);
+
+-- Create Orders Table
+CREATE TABLE Orders (
+    Order_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Customer_ID INT,
+    Name VARCHAR(255),
+    Status VARCHAR(255),
+    Amount DOUBLE,
+    Final_Date DATE,
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID)
+);
+
+-- Create Stock Table
+CREATE TABLE Stock (
+    Stock_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Stock_Name VARCHAR(255),
+    Supplier_ID INT,
+    FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID)
+);
+
+-- Create Payment_Method Table
+CREATE TABLE Payment_Method (
+    Method_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Payment_Method_Name VARCHAR(255),
+    Status VARCHAR(255),
+    Amount DOUBLE
+);
+
+-- Create Items Table
+CREATE TABLE Items (
+    Item_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Status VARCHAR(255),
+    Price DOUBLE,
+    Quantity INT,
+    Create_Date DATE,
+    Modify_Date DATE,
+    Warranty_Date DATE
+);
+
+-- Create Project Table
+CREATE TABLE Project (
+    Project_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Location VARCHAR(255),
+    Starting_Date DATE,
+    End_Date DATE
+);
+
+-- Create Invoice Table
+CREATE TABLE Invoice (
+    Invoice_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Issued_Date DATETIME,
+    Status VARCHAR(255),
+    Warranty VARCHAR(255),
+    Rules_and_Regulations TEXT
+);
+
+-- Create Report Table
+CREATE TABLE Report (
+    Report_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Report_Name VARCHAR(255),
+    Create_Date DATE,
+    Modify_Date DATE
+);
+
+-- Create Cart Table
+CREATE TABLE Cart (
+    Cart_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Status VARCHAR(255),
+    Amount DOUBLE,
+    Create_Date DATE,
+    Modify_Date DATE
+);
+
+-- Create Bank Table
+CREATE TABLE Bank (
+    Account_No INT AUTO_INCREMENT PRIMARY KEY,
+    Bank_Name VARCHAR(255),
+    Bank_Branch VARCHAR(255),
+    Purpose VARCHAR(255)
+);
+
+-- Create Worker Table
+CREATE TABLE Worker (
+    Worker_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Experience VARCHAR(255),
+    NIC_Number VARCHAR(255)
+);
+
+-- Create Cashier Table
+CREATE TABLE Cashier (
+    Cashier_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Experience VARCHAR(255),
+    NIC_Number VARCHAR(255)
+);
+
+-- Create Engineer Table
+CREATE TABLE Engineer (
+    Engineer_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Experience VARCHAR(255),
+    NIC_Number VARCHAR(255)
+);
+
+-- Create Salary Table
+CREATE TABLE Salary (
+    Salary_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Employee_ID INT,
+    Amount DOUBLE,
+    Status VARCHAR(255),
+    FOREIGN KEY (Employee_ID) REFERENCES User(User_ID)
+);
+
+-- Create Duty Table
+CREATE TABLE Duty (
+    Duty_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Event VARCHAR(255),
+    Create_Date DATE,
+    Last_Update DATE,
+    Worker_ID INT,
+    FOREIGN KEY (Worker_ID) REFERENCES Worker(Worker_ID)
+);
+
+-- Create Supply Table
+CREATE TABLE Supply (
+    Supply_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Supplier_ID INT,
+    FOREIGN KEY (Supplier_ID) REFERENCES Supplier(Supplier_ID)
+);
+
+-- Create Return_Stock Table
+CREATE TABLE Return_Stock (
+    Return_Stock_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Create_Date DATETIME,
+    Modify_Date DATETIME
+);
+
+-- Create Payroll Table
+CREATE TABLE Payroll (
+    Payroll_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Amount DOUBLE,
+    Payment_Status VARCHAR(255)
+);
+
+-- Create Payment Table
+CREATE TABLE Payment (
+    Payment_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Method_ID INT,
+    Amount DOUBLE,
+    FOREIGN KEY (Method_ID) REFERENCES Payment_Method(Method_ID)
+);
+
+-- Create Ready To Sell Items Table
+CREATE TABLE Ready_To_Sell_Items (
+    Item_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Sold_Quantity INT,
+    Item_Description TEXT
+);
+
+-- Create Return Items Table
+CREATE TABLE Return_Items (
+    Return_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Check_Damage BOOLEAN
+);
+
+-- Create IN_Stock Table
+CREATE TABLE IN_Stock (
+    Stock_ID INT AUTO_INCREMENT PRIMARY KEY,
+    Create_Date DATETIME,
+    Modify_Date DATETIME
+);
+
+-- Grant All Privileges to a Specific User
+GRANT ALL PRIVILEGES ON . TO 'username'@'localhost' IDENTIFIED BY 'password';
+FLUSH PRIVILEGES;
